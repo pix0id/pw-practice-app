@@ -44,7 +44,4 @@ test('alternate awaits', async ({page}) => {
 test('timeouts', async({page}) => {
     const successButton = page.locator('.bg-success')
     await successButton.click()
-
-
-
 })
