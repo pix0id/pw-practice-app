@@ -44,10 +44,11 @@ export default defineConfig({
       use: { ...devices['Desktop Firefox'] },
     },
 
-    {
+    // Removing for now, as webkit isn't working for some reason on ubuntu. Need to figure out why...
+    /*{
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
-    },
+    },*/
 
     /* Test against mobile viewports. */
     // {
