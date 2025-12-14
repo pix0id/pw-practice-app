@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import {test, expect, Locator} from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:4200");
@@ -167,12 +167,35 @@ test('web tables', async ({page}) => {
     await page.locator('.nb-checkmark').click();*/
 
     // 2 get the row based on the value in a specific column
-    await page.locator('.ng2-smart-pagination-nav').getByText('2').click();
+    /*await page.locator('.ng2-smart-pagination-nav').getByText('2').click();
     const targetRowById = page.getByRole('row', {name: '11'}).filter({has: page.locator('td').nth(1).getByText('11')})
     await targetRowById.locator('.nb-edit').click();
 
     await page.locator('input-editor').getByPlaceholder('E-mail').clear()
     await page.locator('input-editor').getByPlaceholder('E-mail').fill('test@test.com')
     await page.locator('.nb-checkmark').click();
-    await expect(targetRowById.locator('td').nth(5)).toHaveText('test@test.com')
+    await expect(targetRowById.locator('td').nth(5)).toHaveText('test@test.com')*/
+
+    // 3 Test filter of table and loop through each result
+    const ages : string[] = ["20", "30", "40", "200"]
+
+    for (let age of ages) {
+        await page.locator('input-filter').getByPlaceholder('Age').clear()
+        await page.locator('input-filter').getByPlaceholder('Age').fill(age)
+
+        await page.waitForTimeout(500)
+        const ageRows :Locator = page.locator('tbody tr')
+        for(let row of await ageRows.all()) {
+            const cellValue = await row.locator('td').last().textContent()
+
+            if (age == "200") {
+                expect(await page.getByRole('table').textContent()).toContain("No data found")
+            } else {
+                expect(cellValue).toEqual(age)
+            }
+
+
+        }
+    }
+
 })
