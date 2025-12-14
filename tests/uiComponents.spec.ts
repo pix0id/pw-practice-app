@@ -185,6 +185,7 @@ test('web tables', async ({page}) => {
 
         await page.waitForTimeout(500)
         const ageRows :Locator = page.locator('tbody tr')
+
         for(let row of await ageRows.all()) {
             const cellValue = await row.locator('td').last().textContent()
 
@@ -193,8 +194,6 @@ test('web tables', async ({page}) => {
             } else {
                 expect(cellValue).toEqual(age)
             }
-
-
         }
     }
 
