@@ -11,7 +11,24 @@ export class DatePickerPage{
     async selectCommonDatePickerDateFromToday(numberOfDays: number) {
         const calendarInputField = this.page.getByPlaceholder("Form Picker")
         await calendarInputField.click()
+        const dateToAssert: string = await this.selectDateInCalendar(numberOfDays)
 
+        await expect(calendarInputField).toHaveValue(dateToAssert)
+    }
+
+    async selectDatePickerWithRangeFromToday(startDay: number, endDay: number) {
+        const calendarInputField = this.page.getByPlaceholder("Range Picker")
+        await calendarInputField.click()
+
+        const startDateToAssert: string = await this.selectDateInCalendar(startDay)
+        const endDateToAssert: string = await this.selectDateInCalendar(endDay)
+
+        const fullRangeToAssert: string = `${startDateToAssert} - ${endDateToAssert}`
+
+        await expect(calendarInputField).toHaveValue(fullRangeToAssert)
+    }
+
+    private async selectDateInCalendar(numberOfDays: number) {
         let date = new Date()
         date.setDate(date.getDate() + numberOfDays)
         const expectedDate = date.getDate().toString();
@@ -28,8 +45,8 @@ export class DatePickerPage{
             calendarMonthYear = await this.page.locator('nb-calendar-view-mode').textContent()
         }
 
-        await this.page.locator('[class="day-cell ng-star-inserted"]').getByText(expectedDate, {exact: true}).click()
+        await this.page.locator('.day-cell.ng-star-inserted').getByText(expectedDate, {exact: true}).click()
 
-        await expect(calendarInputField).toHaveValue(dateToAssert)
+        return dateToAssert
     }
 }
