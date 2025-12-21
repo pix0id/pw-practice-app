@@ -7,6 +7,7 @@ test.beforeEach(async ({ page }) => {
 
 test("navigate to form page", async ({ page }) => {
     const pm = new PageManager(page)
+
     await pm.navigateTo().formLayoutsPage();
     await pm.navigateTo().datePickerPage();
     await pm.navigateTo().smartTablePage();
@@ -16,6 +17,7 @@ test("navigate to form page", async ({ page }) => {
 
 test("Parameterized methods", async ({ page }) => {
     const pm = new PageManager(page)
+
     await pm.navigateTo().formLayoutsPage();
     await pm.onFormLayoutsPage().submitGridFormCredsAndSelectOption('test@test.com', 'Welcome1', 'Option 1')
     await pm.onFormLayoutsPage().submitInlineForm('Alex Sollman', 'test2@test2.com', true)

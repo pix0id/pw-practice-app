@@ -3,7 +3,7 @@ import { NavigationPage } from "./navigationPage";
 import { FormLayoutPage } from "./formLayoutsPage";
 import {DatePickerPage} from "./datePickerPage";
 
-
+// manages all page objects, making our tests files cleaner
 export class PageManager {
 
     private readonly page: Page;
